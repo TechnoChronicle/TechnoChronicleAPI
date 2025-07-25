@@ -38,6 +38,42 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+/**
+ * 管理模组的所有注册和数据生成器。
+ * <p>
+ * 通常<em>不是</em>线程安全的，因为它会以状态方式保存当前正在构建对象的名称，并使用非并发集合。
+ * <p>
+ * 通过{@link #object(String)}开始一个新对象。此名称将用于所有后续条目，直到下一次调用{@link #object(String)}。或者，可以使用接受名称参数的方法（例如{@link #block(String, NonNullFunction)}）。这些方法不会影响当前名称状态。
+ * <p>
+ * 简单用法示例如下：
+ * <pre>
+ * {@code
+ * public static final TCRegistrate REGISTRATE = TCRegistrate.create("my_modId");
+ * 
+ * static {
+ *     REGISTRATE.defaultCreativeTab((ResourceKey<CreativeModeTab>) null);
+ * }
+ * 
+ * public static RegistryEntry<CreativeModeTab, CreativeModeTab> Test_Tab = REGISTRATE.defaultCreativeTab("test_tab",
+ *             builder -> builder
+ *                     .displayItems(new RegistrateDisplayItemsGenerator("test_tab", REGISTRATE))
+ *                     .build())
+ *         .register();
+ *
+ * static {
+ *     REGISTRATE.creativeModeTab(() -> Test_Tab);
+ * }
+ *
+ * public static final RegistryEntry<Block,MyBlock> MY_BLOCK = REGISTRATE.block(MyBlock::new)
+ *         .defaultItem()
+ *         .register();
+ * }
+ * </pre>
+ * <p>
+ * 上述代码将以"my_modId"的namespace注册一个新的Registrate</br>
+ * 并在Registrate中注册一个名为"test_tab"的创造模式物品栏</br>
+ * 并自动向其添加在{@link TCRegistrate#defaultCreativeTab(ResourceKey)}后注册的Item到物品栏中，直到再次调用{@link TCRegistrate#defaultCreativeTab(ResourceKey)}。
+ */
 public class TCRegistrate extends AbstractRegistrate<TCRegistrate> {
     private static final Map<String, TCRegistrate> EXISTING_REGISTRATES = new Object2ObjectOpenHashMap<>();
 
