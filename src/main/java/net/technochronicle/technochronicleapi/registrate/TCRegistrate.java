@@ -11,17 +11,25 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModList;
+import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
+import net.neoforged.neoforge.fluids.BaseFlowingFluid;
+import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.technochronicle.technochronicleapi.TechnoChronicleAPI;
+import net.technochronicle.technochronicleapi.misc.FluidTypeExtensions;
+import net.technochronicle.technochronicleapi.registrate.builder.FluidBuilder;
+import org.apache.http.annotation.Obsolete;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.openjdk.nashorn.api.tree.ParenthesizedTree;
 
 import java.util.IdentityHashMap;
 import java.util.Map;
@@ -130,4 +138,60 @@ public class TCRegistrate extends AbstractRegistrate<TCRegistrate> {
             return builder.build();
         });
     }
+
+    //TODO: override fluid methods
+    //region Fluids
+
+    /// 使用该方法应保证在 textures/block/fluid/下有对应的 {@code name}_still 和 {@code name}_flow 的文件
+    @Deprecated(since = "1.0.0", forRemoval = false)
+    public FluidBuilder<BaseFlowingFluid.Flowing, TCRegistrate> tcFluid(String name) {
+        return tcFluid(self(), name);
+    }
+
+    /// 使用该方法应保证在 textures/block/fluid/下有对应的 {@code name}_still 和 {@code name}_flow 的文件
+    @Deprecated(since = "1.0.0", forRemoval = false)
+    public <P> FluidBuilder<BaseFlowingFluid.Flowing, P> tcFluid(P parent, String name) {
+        return tcFluid(parent, name, BaseFlowingFluid.Flowing::new);
+    }
+
+    /// 使用该方法应保证在 textures/block/fluid/下有对应的 {@code name}_still 和 {@code name}_flow 的文件
+    @Deprecated(since = "1.0.0", forRemoval = false)
+    public <T extends BaseFlowingFluid> FluidBuilder<T, TCRegistrate> tcFluid(String name, NonNullFunction<BaseFlowingFluid.Properties, T> fluidFactory) {
+        return tcFluid(self(), name, fluidFactory);
+    }
+
+    /// 使用该方法应保证在 textures/block/fluid/下有对应的 {@code name}_still 和 {@code name}_flow 的文件
+    @Deprecated(since = "1.0.0", forRemoval = false)
+    public <T extends BaseFlowingFluid, P> FluidBuilder<T, P> tcFluid(P parent, String name, NonNullFunction<BaseFlowingFluid.Properties, T> fluidFactory) {
+        return entry(name, callback -> FluidBuilder.create(this, parent, name, callback,
+                () -> new FluidTypeExtensions(-1,
+                        ResourceLocation.fromNamespaceAndPath(getModid(), "block/fluid/" + name + "_still"),
+                        ResourceLocation.fromNamespaceAndPath(getModid(), "block/fluid/" + name + "_flow")),
+                fluidFactory));
+    }
+
+    public FluidBuilder<BaseFlowingFluid.Flowing, TCRegistrate> tcFluid(String name, NonNullSupplier<IClientFluidTypeExtensions> extensionsSupplier) {
+        return tcFluid(self(), name, extensionsSupplier);
+    }
+
+    public <P> FluidBuilder<BaseFlowingFluid.Flowing, P> tcFluid(P parent, String name, NonNullSupplier<IClientFluidTypeExtensions> extensionsSupplier) {
+        return entry(name, callback -> FluidBuilder.create(this, parent, name, callback, extensionsSupplier));
+    }
+
+    public FluidBuilder<BaseFlowingFluid.Flowing, TCRegistrate> tcFluid(String name, NonNullFunction<FluidType.Properties, FluidType> typeFactory, NonNullSupplier<IClientFluidTypeExtensions> extensionsSupplier) {
+        return tcFluid(self(), name, typeFactory, extensionsSupplier);
+    }
+
+    public <P> FluidBuilder<BaseFlowingFluid.Flowing, P> tcFluid(P parent, String name, NonNullFunction<FluidType.Properties, FluidType> typeFactory, NonNullSupplier<IClientFluidTypeExtensions> extensionsSupplier) {
+        return entry(name, callback -> FluidBuilder.create(this, parent, name, callback, typeFactory, extensionsSupplier));
+    }
+
+    public <T extends BaseFlowingFluid> FluidBuilder<T, TCRegistrate> tcFluid(String name, NonNullFunction<BaseFlowingFluid.Properties, T> fluidFactory, NonNullFunction<FluidType.Properties, FluidType> typeFactory, NonNullSupplier<IClientFluidTypeExtensions> extensionsSupplier) {
+        return tcFluid(self(), name, fluidFactory, typeFactory, extensionsSupplier);
+    }
+
+    public <T extends BaseFlowingFluid, P> FluidBuilder<T, P> tcFluid(P parent, String name, NonNullFunction<BaseFlowingFluid.Properties, T> fluidFactory, NonNullFunction<FluidType.Properties, FluidType> typeFactory, NonNullSupplier<IClientFluidTypeExtensions> extensionsSupplier) {
+        return entry(name, callback -> FluidBuilder.create(this, parent, name, callback, typeFactory, extensionsSupplier, fluidFactory));
+    }
+    //endregion
 }
