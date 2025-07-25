@@ -7,6 +7,7 @@ import net.minecraft.world.item.Items;
 import net.technochronicle.technochronicleapi.registrate.TCRegistrate;
 import org.jetbrains.annotations.NotNull;
 
+/// 适用 {@link CreativeModeTab.Builder#displayItems(CreativeModeTab.DisplayItemsGenerator)}的与{@link TCRegistrate}搭配的生成器
 public class RegistrateDisplayItemsGenerator implements CreativeModeTab.DisplayItemsGenerator {
     public final String name;
     public final TCRegistrate registrate;
@@ -32,7 +33,7 @@ public class RegistrateDisplayItemsGenerator implements CreativeModeTab.DisplayI
                 continue;
             Item item = entry.get();
 
-                output.accept(item);
+            output.accept(item);
         }
     }
 }

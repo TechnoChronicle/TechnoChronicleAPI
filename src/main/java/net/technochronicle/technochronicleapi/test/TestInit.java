@@ -16,9 +16,12 @@ import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtension
 import net.neoforged.neoforge.fluids.BaseFlowingFluid;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.technochronicle.technochronicleapi.TechnoChronicleAPI;
+import net.technochronicle.technochronicleapi.block.feature.RotationState;
+import net.technochronicle.technochronicleapi.definition.BaseMachineDefinition;
 import net.technochronicle.technochronicleapi.misc.FluidTypeExtensions;
 import net.technochronicle.technochronicleapi.misc.RegistrateDisplayItemsGenerator;
 import net.technochronicle.technochronicleapi.registrate.TCRegistrate;
+import net.technochronicle.technochronicleapi.registrate.entry.MachineEntry;
 import org.jetbrains.annotations.Nullable;
 
 public class TestInit {
@@ -63,6 +66,25 @@ public class TestInit {
                     BaseFlowingFluid.Flowing::new, FluidType::new,
                     () -> FluidTypeExtensions.EMPTY)
             .renderType(() -> () -> RenderType.TRANSLUCENT)
+            .register();
+
+    public static RegistryEntry<CreativeModeTab, CreativeModeTab> Machine_Tab = REGISTRATE.defaultCreativeTab("machine_tab",
+                    builder -> builder
+                            .displayItems(new RegistrateDisplayItemsGenerator("machine_tab", REGISTRATE))
+                            .icon(Items.FURNACE::getDefaultInstance)
+                            .title(REGISTRATE.addLang("itemGroup",
+                                    ResourceLocation.fromNamespaceAndPath(TechnoChronicleAPI.MOD_ID, "machine_tab"),
+                                    "Machine Tab"))
+                            .build())
+            .register();
+
+    static {
+        REGISTRATE.creativeModeTab(() -> Machine_Tab);
+    }
+
+    public static MachineEntry<BaseMachineDefinition<?>> Test_Machine = REGISTRATE.machine("test_machine")
+            .setRotationState(RotationState.ALL)
+            .setEnableExtraRotation(true)
             .register();
 
     public static void init() {
