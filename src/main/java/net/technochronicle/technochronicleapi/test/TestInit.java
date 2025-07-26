@@ -4,6 +4,8 @@ import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.entry.FluidEntry;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.entry.RegistryEntry;
+import icyllis.modernui.mc.MuiModApi;
+import net.minecraft.client.KeyMapping;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -11,8 +13,6 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.fluids.BaseFlowingFluid;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.technochronicle.technochronicleapi.TechnoChronicleAPI;
@@ -20,9 +20,11 @@ import net.technochronicle.technochronicleapi.block.feature.RotationState;
 import net.technochronicle.technochronicleapi.definition.BaseMachineDefinition;
 import net.technochronicle.technochronicleapi.misc.FluidTypeExtensions;
 import net.technochronicle.technochronicleapi.misc.RegistrateDisplayItemsGenerator;
+import net.technochronicle.technochronicleapi.mui.fragment.TechTreeFragment;
 import net.technochronicle.technochronicleapi.registrate.TCRegistrate;
 import net.technochronicle.technochronicleapi.registrate.entry.MachineEntry;
 import org.jetbrains.annotations.Nullable;
+import org.lwjgl.glfw.GLFW;
 
 public class TestInit {
     public static final TCRegistrate REGISTRATE = TCRegistrate.create(TechnoChronicleAPI.MOD_ID);
@@ -87,6 +89,17 @@ public class TestInit {
             .setEnableExtraRotation(true)
             .register();
 
+    
+    static {
+        REGISTRATE.setDefaultKeyGroup(TechnoChronicleAPI.id("tech"));
+    }
+    public static RegistryEntry<KeyMapping, KeyMapping>OpenTechTree=REGISTRATE.keyMapping("open_tech_tree", GLFW.GLFW_KEY_N)
+            .setOnKeyDown(event->{
+                TechnoChronicleAPI.LOGGER.info("Open Tech Tree");
+                MuiModApi.openScreen(new TechTreeFragment());
+            })
+            .register();
+    
     public static void init() {
     }
 }

@@ -26,3 +26,4 @@ gradle-app.setting
 !/run-data/mods
 
 src/generated/
+/logs/

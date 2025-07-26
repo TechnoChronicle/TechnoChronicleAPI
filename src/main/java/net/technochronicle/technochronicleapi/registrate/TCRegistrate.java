@@ -1,5 +1,6 @@
 package net.technochronicle.technochronicleapi.registrate;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import com.tterrag.registrate.AbstractRegistrate;
 import com.tterrag.registrate.builders.Builder;
 import com.tterrag.registrate.builders.NoConfigBuilder;
@@ -8,6 +9,8 @@ import com.tterrag.registrate.util.entry.RegistryEntry;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
+import lombok.Setter;
+import net.minecraft.client.KeyMapping;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
@@ -24,6 +27,8 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
+import net.neoforged.neoforge.client.settings.IKeyConflictContext;
+import net.neoforged.neoforge.client.settings.KeyConflictContext;
 import net.neoforged.neoforge.fluids.BaseFlowingFluid;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -37,6 +42,7 @@ import net.technochronicle.technochronicleapi.machine.instance.MachineBlockEntit
 import net.technochronicle.technochronicleapi.machine.instance.MachineItem;
 import net.technochronicle.technochronicleapi.misc.FluidTypeExtensions;
 import net.technochronicle.technochronicleapi.registrate.builder.FluidBuilder;
+import net.technochronicle.technochronicleapi.registrate.builder.KeyMappingBuilder;
 import net.technochronicle.technochronicleapi.registrate.builder.MachineBuilder;
 import org.apache.commons.lang3.function.TriFunction;
 import org.apache.http.annotation.Obsolete;
@@ -141,6 +147,36 @@ public class TCRegistrate extends AbstractRegistrate<TCRegistrate> {
         }
         return this;
     }
+
+    //TODO:add some misc methods to TCRegistrate
+    //region KeyMappings
+    @Setter
+    private ResourceLocation defaultKeyGroup = ResourceLocation.fromNamespaceAndPath(getModid(), "default");
+    public KeyMappingBuilder<TCRegistrate> keyMapping(String name, int keyCode) {
+        return keyMapping(self(), name, keyCode);
+    }
+    public<P> KeyMappingBuilder<P> keyMapping(P parent,String name, int keyCode) {
+        return keyMapping(parent, name, keyCode, defaultKeyGroup);
+    }
+    public KeyMappingBuilder<TCRegistrate> keyMapping(String name, int keyCode, IKeyConflictContext keyConflictContext, InputConstants.Type inputType) {
+        return keyMapping(self(), name, keyCode, keyConflictContext, inputType);
+    }
+    public<P> KeyMappingBuilder<P> keyMapping(P parent, String name, int keyCode, IKeyConflictContext keyConflictContext, InputConstants.Type inputType) {
+        return keyMapping(parent, name, keyCode, defaultKeyGroup, keyConflictContext, inputType);
+    }
+    public KeyMappingBuilder<TCRegistrate> keyMapping(String name, int keyCode, ResourceLocation keyGroup) {
+        return keyMapping(self(), name, keyCode, keyGroup);
+    }
+    public<P> KeyMappingBuilder<P> keyMapping(P parent,String name, int keyCode, ResourceLocation keyGroup) {
+        return keyMapping(parent, name, keyCode, keyGroup, KeyConflictContext.IN_GAME, InputConstants.Type.KEYSYM);
+    }
+    public KeyMappingBuilder<TCRegistrate> keyMapping(String name, int keyCode, ResourceLocation keyGroup,IKeyConflictContext keyConflictContext, InputConstants.Type inputType) {
+        return keyMapping(self(), name, keyCode, keyGroup, keyConflictContext, inputType);
+    }
+    public<P> KeyMappingBuilder<P> keyMapping(P parent,String name, int keyCode,ResourceLocation keyGroup, IKeyConflictContext keyConflictContext, InputConstants.Type inputType) {
+        return entry(name, callback -> new KeyMappingBuilder<>(this, parent, name, callback, keyCode, keyGroup, keyConflictContext, inputType));
+    }
+    //endregion
 
     //TODO:add extra methods to TCRegistrate
     @Nullable
@@ -296,4 +332,5 @@ public class TCRegistrate extends AbstractRegistrate<TCRegistrate> {
     //endregion
     //region MultiBlock Machine registry
     //endregion
+
 }
