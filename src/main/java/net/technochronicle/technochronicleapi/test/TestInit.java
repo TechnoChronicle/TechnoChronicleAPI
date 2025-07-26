@@ -18,6 +18,7 @@ import net.neoforged.neoforge.fluids.FluidType;
 import net.technochronicle.technochronicleapi.TechnoChronicleAPI;
 import net.technochronicle.technochronicleapi.block.feature.RotationState;
 import net.technochronicle.technochronicleapi.definition.BaseMachineDefinition;
+import net.technochronicle.technochronicleapi.helper.TechTreeHelper;
 import net.technochronicle.technochronicleapi.misc.FluidTypeExtensions;
 import net.technochronicle.technochronicleapi.misc.RegistrateDisplayItemsGenerator;
 import net.technochronicle.technochronicleapi.mui.fragment.TechTreeFragment;
@@ -89,17 +90,15 @@ public class TestInit {
             .setEnableExtraRotation(true)
             .register();
 
-    
+
     static {
         REGISTRATE.setDefaultKeyGroup(TechnoChronicleAPI.id("tech"));
     }
-    public static RegistryEntry<KeyMapping, KeyMapping>OpenTechTree=REGISTRATE.keyMapping("open_tech_tree", GLFW.GLFW_KEY_N)
-            .setOnKeyDown(event->{
-                TechnoChronicleAPI.LOGGER.info("Open Tech Tree");
-                MuiModApi.openScreen(new TechTreeFragment());
-            })
+
+    public static RegistryEntry<KeyMapping, KeyMapping> OpenTechTree = REGISTRATE.keyMapping("open_tech_tree", GLFW.GLFW_KEY_N)
+            .setOnKeyDown(TechTreeHelper::TryOpenTechTree)
             .register();
-    
+
     public static void init() {
     }
 }

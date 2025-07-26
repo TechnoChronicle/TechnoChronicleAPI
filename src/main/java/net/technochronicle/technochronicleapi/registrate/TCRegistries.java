@@ -9,5 +9,6 @@ import net.technochronicle.technochronicleapi.definition.BaseMachineDefinition;
 public class TCRegistries {
     public static final ResourceKey<Registry<BaseMachineDefinition<?>>> MACHINE_DEFINITIONS =
             ResourceKey.createRegistryKey(TechnoChronicleAPI.id("machine_definitions"));
-    public static final ResourceKey<Registry<KeyMapping>>KEYMAPPING=ResourceKey.createRegistryKey(TechnoChronicleAPI.id("key_mappings"));
+    public static final ResourceKey<Registry<KeyMapping>> KEYMAPPING =
+            ResourceKey.createRegistryKey(TechnoChronicleAPI.id("key_mappings"));
 }

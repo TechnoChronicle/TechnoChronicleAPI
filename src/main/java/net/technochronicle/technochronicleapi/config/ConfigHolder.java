@@ -29,29 +29,43 @@ public class ConfigHolder {
 
     public static class ClientConfigs {
         @Configurable
-        @Configurable.Comment({ "The default color to overlay onto machines.",
+        @Configurable.Comment({"The default color to overlay onto machines.",
                 "#FFFFFF is no coloring (default).",
-                "#D2DCFF is the classic blue from GT5." })
+                "#D2DCFF is the classic blue from GT5."})
         @Configurable.StringPattern(value = "#[0-9a-fA-F]{1,6}")
         @Configurable.Gui.ColorValue
         public String defaultPaintingColor = "#FFFFFF";
     }
+
     @Configurable
     public ServerConfigs server = new ServerConfigs();
+
     public static class ServerConfigs {
     }
+
     @Configurable
     public MachineConfigs machines = new MachineConfigs();
+
     public static class MachineConfigs {
         @Configurable
-        @Configurable.Comment({ "Whether ONLY owners can open a machine gui", "Default: false" })
+        @Configurable.Comment({"只有所有者能打开机器GUI", "Default: false"})
         public boolean onlyOwnerGUI = false;
         @Configurable
-        @Configurable.Comment({ "Whether ONLY owners can break a machine", "Default: false" })
+        @Configurable.Comment({"只有所有者能破坏机器方块", "Default: false"})
         public boolean onlyOwnerBreak = false;
         @Configurable
-        @Configurable.Comment({ "Minimum op level to bypass the ownership checks", "Default: 2" })
+        @Configurable.Comment({"最小能绕过限制的OP权限", "Default: 2"})
         @Configurable.Range(min = 0, max = 4)
         public int ownerOPBypass = 2;
+    }
+
+    @Configurable
+    public TechTreeConfigs techTree = new TechTreeConfigs();
+
+    public static class TechTreeConfigs {
+        @Configurable
+        @Configurable.Synchronized
+        @Configurable.Comment({"是否启用科技树的节点隐藏", "Default: false"})
+        public boolean enableHiddenTree = false;
     }
 }

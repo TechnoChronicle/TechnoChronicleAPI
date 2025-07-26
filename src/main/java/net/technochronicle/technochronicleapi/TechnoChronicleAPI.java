@@ -17,6 +17,8 @@ import net.neoforged.fml.loading.FMLPaths;
 import net.neoforged.neoforge.data.loading.DatagenModLoader;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
 import net.technochronicle.technochronicleapi.config.ConfigHolder;
+import net.technochronicle.technochronicleapi.techtree.TeamTechTree;
+import net.technochronicle.technochronicleapi.techtree.TreeHelper;
 import net.technochronicle.technochronicleapi.test.TestInit;
 import net.technochronicle.technochronicleapi.utils.FormattingUtil;
 import org.apache.logging.log4j.LogManager;
@@ -36,10 +38,13 @@ public class TechnoChronicleAPI {
 
     public TechnoChronicleAPI(IEventBus modEventBus, ModContainer modContainer) {
         tcModBus = modEventBus;
-
         ConfigHolder.init();
+        TreeHelper.init();
 
         TestInit.init();
+        if(isClientSide()){
+            TeamTechTree.init();
+        }
     }
 
 
