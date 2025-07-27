@@ -1,0 +1,9 @@
+{
+  "type": "ApplyNode",
+  "uuid": "3C6F0230-6755-13B6-7A90-2E9A31A79F95",
+  "title": "建议工具制作",
+  "description": "解锁简易工具配方",
+  "parents": [
+    "F9D5DED1-BFAB-2307-F73B-2146356E2F9C"
+  ]
+}
