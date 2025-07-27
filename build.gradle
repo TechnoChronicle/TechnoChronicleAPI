@@ -109,6 +109,7 @@ neoForge {
             // 请阅读：https://stackoverflow.com/questions/2031163/when-to-use-the-different-log-levels
             logLevel = org.slf4j.event.Level.DEBUG
         }
+
     }
 
     mods {
@@ -141,8 +142,11 @@ dependencies {
 
     //compileOnly "curse.maven:applied-energistics-2-223794:6488853" //AE2 19.2.10
     compileOnly "curse.maven:jei-238222:6600216" //JEI 19.21.1.310
-
+    
+    // Modern UI for Minecraft Forge
     compileOnly "curse.maven:modern-ui-352491:6200236" //Modern UI 3.11.1.9
+    runtimeOnly "curse.maven:modern-ui-352491:6200236" //Modern UI 3.11.1.9
+    runtimeOnly 'com.github.ben-manes.caffeine:caffeine:3.2.2'
 
     compileOnly("curse.maven:architectury-api-419699:5786327")
     //Team
