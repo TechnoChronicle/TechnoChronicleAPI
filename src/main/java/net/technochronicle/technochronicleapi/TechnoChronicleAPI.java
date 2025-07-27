@@ -13,7 +13,6 @@ import net.neoforged.fml.loading.FMLPaths;
 import net.neoforged.neoforge.data.loading.DatagenModLoader;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
 import net.technochronicle.technochronicleapi.config.ConfigHolder;
-import net.technochronicle.technochronicleapi.test.TestInit;
 import net.technochronicle.technochronicleapi.utils.FormattingUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -34,8 +33,6 @@ public class TechnoChronicleAPI {
         tcModBus = modEventBus;
 
         ConfigHolder.init();
-
-        TestInit.init();
     }
 
 
