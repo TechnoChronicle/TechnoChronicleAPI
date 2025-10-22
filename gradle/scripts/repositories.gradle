@@ -1,0 +1,25 @@
+repositories {
+    mavenLocal()
+    maven {
+        url = "https://cursemaven.com" // CurseForge模组仓库
+        content {
+            includeGroup "curse.maven"
+        }
+    }
+    maven {
+        // JEI
+        name = "BlameJared"
+        url = "https://maven.blamejared.com/"
+    }
+    maven {
+        url = 'https://maven.neoforged.net/releases'
+    }
+    exclusiveContent { // Configuration
+        forRepository { maven { url = "https://api.repsy.io/mvn/toma/public/" } }
+        filter { includeGroup('dev.toma.configuration') }
+    }
+    exclusiveContent { // tterrag - registrate
+        forRepository { maven { url = "https://mvn.devos.one/snapshots/" } }
+        filter { includeGroup("com.tterrag.registrate") }
+    }
+}

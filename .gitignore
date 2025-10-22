@@ -1,4 +1,5 @@
 .gradle
+.idea
 **/build/
 !**/src/**/build/
 
@@ -20,10 +21,7 @@ gradle-app.setting
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
 
-/run/*
-!/run/mods
-/run-data/*
-!/run-data/mods
-
+run
 src/generated/
 /logs/
+
