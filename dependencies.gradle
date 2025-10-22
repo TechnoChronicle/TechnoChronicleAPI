@@ -8,6 +8,12 @@ dependencies {
     jarJar(api("com.tterrag.registrate:Registrate:MC1.21-1.3.0+67"))
     //三方库
     jarJar(api("curse.maven:ldlib-626676:6260254"))
+    jarJar(api("curse.maven:guideme-1173950:7127444")) //GuideMe21.1.15
+    jarJar(api("curse.maven:geckolib-388172:7023453"))
+    jarJar(api("curse.maven:glodium-957920:5821676"))
     //应用能源
-    jarJar(api("curse.maven:applied-energistics-2-223794:6488853")) //AE2 19.2.10
+    jarJar(api("curse.maven:applied-energistics-2-223794:7027323"))//AE2 19.2.17
+    jarJar(api("curse.maven:ex-pattern-provider-892005:7129221"))//EAE 2.2.24
+    jarJar(api("curse.maven:applied-energistics-2-wireless-terminals-459929:6939030"))// WtLib 19.2.6
+    jarJar(api("curse.maven:advancedae-1084104:7135375")) //AdvancedAe1.6.3
 }
