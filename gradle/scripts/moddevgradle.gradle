@@ -13,19 +13,19 @@ neoForge {
     // Default run configurations.
     // These can be tweaked, removed, or duplicated as needed.
     runs {
-        runClient {
+        client {
             client()
             gameDirectory.set(file('run/client'))
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
         }
-        runServer {
+        server {
             server()
             programArgument '--nogui'
             gameDirectory.set(file('run/server'))
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
         }
 
-        runData {
+        data {
             data()
             ideName = "Data"
             gameDirectory.set(file('run/data'))
