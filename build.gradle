@@ -42,3 +42,17 @@ jar{
 java {
     withSourcesJar()
 }
+
+// 示例配置，允许使用maven-publish插件发布
+publishing {
+    publications {
+        register('mavenJava', MavenPublication) {
+            from components.java
+        }
+    }
+    repositories {
+        maven {
+            url "file://${project.projectDir}/repo"
+        }
+    }
+}
