@@ -10,6 +10,7 @@ dependencies {
     compileOnly("curse.maven:ldlib-626676:6260254")
     compileOnly("curse.maven:geckolib-388172:7023453")
     compileOnly("curse.maven:glodium-957920:5821676")
+    compileOnly("curse.maven:architectury-api-419699:5786327")
     //应用能源
     compileOnly("curse.maven:applied-energistics-2-223794:7027323")//AE2 19.2.17
     compileOnly("curse.maven:ex-pattern-provider-892005:7129221")//EAE 2.2.24

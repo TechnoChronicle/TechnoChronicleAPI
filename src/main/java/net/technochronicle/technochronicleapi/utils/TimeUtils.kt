@@ -1,4 +1,4 @@
-package net.technochronicle.technochronicleapi.utility
+package net.technochronicle.technochronicleapi.utils
 
 import kotlin.time.Duration
 
